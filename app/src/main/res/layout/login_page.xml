@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#70e9a5"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/iv_user_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/pet" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="다 녀 오 개"
+        android:textColor="#ffffffff"
+        android:textSize="50sp" />
+
+    <EditText
+        android:id="@+id/tv_user_id"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:background="#ffffffff"
+        android:focusableInTouchMode="true"
+        android:hint="아이디를 입력하세요"
+        android:maxLength="20"
+        android:padding="5dp"
+        android:textColorHint="#606060" />
+
+    <EditText
+        android:id="@+id/tv_user_name"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:background="#ffffffff"
+        android:focusableInTouchMode="true"
+        android:hint="비밀번호를 입력하세요"
+        android:inputType="textPassword"
+        android:maxLength="20"
+        android:padding="5dp"
+        android:textColorHint="#606060" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:padding="10dp">
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:layout_margin="10dp"
+            android:background="#62a9ff"
+            android:text="회원가입" />
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:background="#62a9ff"
+            android:onClick="loginBt"
+            android:text="로그인" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/kakao_login" />
+</LinearLayout>
