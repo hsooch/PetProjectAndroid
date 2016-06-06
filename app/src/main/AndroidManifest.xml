@@ -24,6 +24,11 @@
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
         <activity android:name=".MainActivity"></activity>
+        <activity
+            android:name=".RegistPopup"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme.NoTitleBar"
+            android:windowSoftInputMode="stateHidden"></activity>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

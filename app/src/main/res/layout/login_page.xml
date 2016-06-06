@@ -61,6 +61,7 @@
             android:layout_height="35dp"
             android:layout_margin="10dp"
             android:background="#62a9ff"
+            android:onClick="registBt"
             android:text="회원가입" />
 
         <Button

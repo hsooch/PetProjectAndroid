@@ -2,7 +2,9 @@ package com.example.nahcoos.petproject;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -52,7 +54,6 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
 
-        // 뒤로가기 두번 눌러야 종료
         backPressCloseHandler = new BackPressCloseHandler(this);
 
         // 헤쉬키를 가져온다
@@ -167,12 +168,52 @@ public class LoginActivity extends Activity {
         }
     }
 
+    // 로그인 버튼- 로그인 성공시 다음 액티비티로 넘어감
     public void loginBt(View view) {
         intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
+    // 회원가입창 팝업 버튼
+    public void registBt(View view) {
+        Toast.makeText(this, "회원가입 폼 띄우기", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(LoginActivity.this, RegistPopup.class);
+
+        startActivity(intent);
+    }
+
+    // 텍스트 입력 가능한 얼럿창 띄우기
+    public void textPopup(View view) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Title");
+        alert.setMessage("Message");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                value.toString();
+                // Do something with value!
+            }
+        });
+
+
+        alert.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Canceled.
+                    }
+                });
+
+        alert.show();
+    }
+
+    // 뒤로가기 두번 누르면 앱 종료
     public void onBackPressed() {
         backPressCloseHandler.onBackPressed();
     }
