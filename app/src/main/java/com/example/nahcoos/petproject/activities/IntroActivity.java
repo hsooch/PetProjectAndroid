@@ -21,7 +21,7 @@ public class IntroActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE); // 인트로화면이므로 타이틀바를 없앤다
         setContentView(R.layout.intro_page);
         handler = new Handler(); // 딜레이를 주기 위해 핸들러 생성
-        handler.postDelayed(mrun, 2200); // 딜레이 (러너블 객체는 mrun, 시간 2초)
+        handler.postDelayed(mrun, 2400); // 딜레이 (러너블 객체는 mrun, 시간 2초)
 
         ProgressBarCircular progressBarCircular = (ProgressBarCircular) findViewById(R.id.progress);
         progressBarCircular.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
@@ -33,8 +33,9 @@ public class IntroActivity extends AppCompatActivity {
             Intent intent = new Intent(IntroActivity.this, LoginActivity.class); // 인텐트 생성(현 액티비티, 새로 실행할 액티비티)
             startActivity(intent);
             finish();
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             //overridePendingTransition 이란 함수를 이용하여 fade in,out 효과를줌. 순서가 중요
+            //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
         }
     };
 

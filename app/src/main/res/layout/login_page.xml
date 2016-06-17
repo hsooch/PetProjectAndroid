@@ -1,28 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="#ffffffff"
     android:orientation="vertical"
     tools:context=".activities.LoginActivity">
 
     <ImageView
-        android:id="@+id/user_profile"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/pet" />
+        android:id="@+id/intro_bg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="100dp"
+        android:layout_weight="1"
+        android:src="@drawable/bg_login" />
 
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:text="다 녀 오 개"
-        android:textColor="@color/light"
-        android:textSize="50sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/bt_kakao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/transparent"
+            android:src="@drawable/kakao_login" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:background="@color/com_kakao_brown"
+            android:onClick="loginBt"
+            android:text="게시판\n들어가기" />
+
+        <ImageView
+            android:id="@+id/user_profile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/pet" />
+
+        <TextView
+            android:id="@+id/test_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디 받아옴 테스트"
+            android:textColor="@color/com_kakao_brown" />
+
+        <TextView
+            android:id="@+id/test_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="닉네임 받아옴 테스트"
+            android:textColor="@color/com_kakao_brown" />
+    </LinearLayout>
+</LinearLayout>
+
 
     <!--<LinearLayout
         android:layout_width="wrap_content"
@@ -54,44 +92,3 @@
             android:maxLength="20"
             android:textColorHint="@color/light" />
     </LinearLayout>-->
-
-    <ImageButton
-        android:id="@+id/bt_kakao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/kakao_login" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:background="@color/com_kakao_brown"
-        android:onClick="loginBt"
-        android:text="게시판\n들어가기" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/test_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="아이디 받아옴 테스트"
-            android:textColor="@color/com_kakao_brown" />
-
-        <TextView
-            android:id="@+id/test_nick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="닉네임 받아옴 테스트"
-            android:textColor="@color/com_kakao_brown" />
-    </LinearLayout>
-</LinearLayout>

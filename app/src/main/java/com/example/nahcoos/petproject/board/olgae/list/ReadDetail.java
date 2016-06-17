@@ -1,4 +1,4 @@
-package com.example.nahcoos.petproject.board.list;
+package com.example.nahcoos.petproject.board.olgae.list;
 
 import android.content.Intent;
 import android.os.Bundle;

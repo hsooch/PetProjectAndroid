@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:widget="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -41,19 +40,17 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:layout_marginTop="?attr/actionBarSize"
-        android:background="?attr/colorPrimaryDark"
         android:choiceMode="singleChoice"
         android:divider="@android:color/white"
         android:dividerHeight="1dp"
         android:drawSelectorOnTop="false"
-        android:footerDividersEnabled="false"
-        android:headerDividersEnabled="false"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:divider="@color/light"
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatImageView
@@ -71,7 +68,8 @@
                 android:layout_weight="7"
                 android:gravity="center"
                 android:text="사용자 이름"
-                android:textSize="25sp" />
+                android:textColor="@color/light"
+                android:textSize="24sp" />
 
             <Button
                 android:id="@+id/bt_setup"
@@ -83,18 +81,37 @@
 
         </LinearLayout>
 
-        <ListView
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="내가 작성한 글"
+            android:textColor="@color/light"
+            android:textSize="16sp" />
+
+        <GridView
             android:id="@+id/drawer_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="8" />
+            android:layout_weight="7"
+            android:columnWidth="100dp"
+            android:horizontalSpacing="2dp"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="2dp" />
 
-        <Button
-            android:id="@+id/btn_footer"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="로그아웃" />
+            android:divider="@color/light">
 
+            <Button
+                android:id="@+id/btn_footer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="로그아웃" />
+        </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

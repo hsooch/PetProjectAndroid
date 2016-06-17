@@ -1,4 +1,4 @@
-package com.example.nahcoos.petproject.board.list;
+package com.example.nahcoos.petproject.board.ogae.list;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -35,7 +35,7 @@ public class MyAsync extends AsyncTask<String, Void, String> {
 
     protected void onPreExecute() {
         try {
-            url= new URL("http://192.168.0.13:9090/device/pet/board");
+            url= new URL("http://192.168.43.216:9090/device/pet/board");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

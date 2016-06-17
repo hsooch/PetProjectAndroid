@@ -22,10 +22,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.nahcoos.petproject.GridViewAdapter;
 import com.example.nahcoos.petproject.R;
 import com.example.nahcoos.petproject.api.ext.BackPressCloseHandler;
 import com.example.nahcoos.petproject.api.ext.CircleTransform;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;              // 메인 페이지 드로어 레이아웃 (포갤수 있는 레이아웃)
     private ActionBarDrawerToggle drawerToggle;     // 드로어 버튼 애니메이션
     private LinearLayout drawerLinear;              // 슬라이드 메뉴 레이아웃
-    private ListView drawerList;                    // 좌측 슬라이드메뉴 리스트
+    private GridView drawerList;                    // 좌측 슬라이드메뉴 리스트
     private Toolbar toolbar;                        // 상단 툴바
     String title;                                   // 사용자 이름
     String profileUrl;                              // 사용자 사진
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLinear = (LinearLayout) findViewById(R.id.drawer_linear);
-        drawerList = (ListView) findViewById(R.id.drawer_list);
+        drawerList = (GridView) findViewById(R.id.drawer_list);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         profileImg = (AppCompatImageView) findViewById(R.id.main_profile);
@@ -112,7 +114,17 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.findViewById(R.id.bt_setup).setOnClickListener(mClickListener);
         drawerLayout.findViewById(R.id.btn_footer).setOnClickListener(mClickListener);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+        drawerList.setAdapter(new GridViewAdapter(this));
+        drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "" + position,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        drawerLinear.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.grey));
+
+        /*ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, values);
         drawerList.setAdapter(adapter);
         drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -148,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
 
         // 뒤로가기 두번 눌러 종료하기
         backPressCloseHandler = new BackPressCloseHandler(this);
@@ -273,8 +285,9 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(drawerLinear)) {
             drawerLayout.closeDrawer(GravityCompat.START);
+        } else if (!drawerLayout.isDrawerOpen(drawerLinear)) {
+            backPressCloseHandler.onBackPressed();
         }
-        backPressCloseHandler.onBackPressed();
     }
 
     // 텍스트 입력 가능한 얼럿창 띄우기

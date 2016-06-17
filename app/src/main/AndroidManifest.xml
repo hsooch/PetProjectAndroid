@@ -70,17 +70,14 @@
         <!-- 주소로 좌표 검색창 -->
         <activity android:name=".fragments.SearchAddr"></activity>
 
-        <!-- 회원 가입창 팝업 -->
-        <activity
-            android:name=".fragments.RegistPopup"
-            android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="stateHidden" />
-
         <!-- 맵 팝업 -->
         <activity android:name=".fragments.MapPopup" />
 
         <activity android:name=".board.ogae.write.Write" />
-        <activity android:name=".board.list.ReadDetail" />
+        <activity android:name=".board.ogae.list.ReadDetail" />
+
+        <activity android:name=".board.olgae.write.Write" />
+        <activity android:name=".board.olgae.list.ReadDetail" />
     </application>
 
 </manifest>

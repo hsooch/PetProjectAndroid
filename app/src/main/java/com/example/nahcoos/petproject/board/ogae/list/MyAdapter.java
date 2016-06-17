@@ -1,4 +1,4 @@
-package com.example.nahcoos.petproject.board.list;
+package com.example.nahcoos.petproject.board.ogae.list;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatImageView;
