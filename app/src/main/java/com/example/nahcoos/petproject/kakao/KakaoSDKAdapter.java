@@ -1,4 +1,4 @@
-package com.example.nahcoos.petproject;
+package com.example.nahcoos.petproject.kakao;
 
 import android.app.Activity;
 import android.content.Context;

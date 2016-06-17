@@ -1,24 +1,25 @@
-package com.example.nahcoos.petproject;
+package com.example.nahcoos.petproject.activities;
 
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatEditText;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nahcoos.petproject.R;
+import com.example.nahcoos.petproject.api.ext.BackPressCloseHandler;
+import com.example.nahcoos.petproject.api.ext.CircleTransform;
+import com.example.nahcoos.petproject.fragments.SearchAddr;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.network.ErrorResult;
@@ -26,51 +27,61 @@ import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
+import com.squareup.picasso.Picasso;
 
 import java.security.MessageDigest;
 
-
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
     String TAG = this.getClass().getName();
-
-    private SessionCallback mKakaocallback;
-
-    // view
-    private ImageButton login_button;
-    private EditText tv_user_id;
-    private EditText tv_user_name;
-    private ImageView iv_user_profile;
-
-    private String userName;
-    private String userId;
-    //private String profileUrl;
 
     Intent intent;
 
-    private BackPressCloseHandler backPressCloseHandler;
+    private SessionCallback mKakaocallback;
+
+    private ImageView user_profile;
+    private AppCompatEditText user_id;
+    private AppCompatEditText user_pwd;
+
+    private ImageButton bt_kakao;   // 카톡 로그인 버튼
+
+    private TextView test_id;
+    private TextView test_nick;
+
+    private String userId;      // 카톡 아이디
+    private String userName;    // 카톡 닉네임
+    private String profileUrl;  // 카톡 프사
+
+    private BackPressCloseHandler backPressCloseHandler;    // 앱 종료 핸들러
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
 
-        backPressCloseHandler = new BackPressCloseHandler(this);
-
-        // 헤쉬키를 가져온다
+        // 앱 해시키를 가져온다
         getAppKeyHash();
 
-        tv_user_id = (EditText) findViewById(R.id.tv_user_id);
-        tv_user_name = (EditText) findViewById(R.id.tv_user_name);
-        //iv_user_profile = (ImageView) findViewById(R.id.iv_user_profile);
+        // 카톡정보 받아오기 테스트용 텍스트뷰
+        test_id = (TextView) findViewById(R.id.test_id);
+        test_nick = (TextView) findViewById(R.id.test_nick);
 
-        login_button = (ImageButton) findViewById(R.id.login_button);
-        login_button.setOnClickListener(new View.OnClickListener() {
+        user_profile = (ImageView) findViewById(R.id.user_profile);
+
+        //user_id = (AppCompatEditText) findViewById(R.id.user_id);
+        //user_pwd = (AppCompatEditText) findViewById(R.id.user_pwd);
+
+        bt_kakao = (ImageButton) findViewById(R.id.bt_kakao);
+        // 카카오로그인 버튼에 리스너 달기
+        bt_kakao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 카카오 로그인 요청
                 isKakaoLogin();
             }
         });
+
+        // 종료 도우미 객체 생성
+        backPressCloseHandler = new BackPressCloseHandler(this);
     }
 
     private void isKakaoLogin() {
@@ -80,10 +91,10 @@ public class LoginActivity extends Activity {
         com.kakao.auth.Session.getCurrentSession().checkAndImplicitOpen();
         com.kakao.auth.Session.getCurrentSession().open(AuthType.KAKAO_TALK_EXCLUDE_NATIVE_LOGIN, LoginActivity.this);
 
-        //키보드 숨기기
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(tv_user_id.getWindowToken(), 0);
-        imm.hideSoftInputFromWindow(tv_user_name.getWindowToken(), 0);
+        // 키보드 숨기기 (안해주면 뷰에 에딧텍스트가 있을경우 자동으로 키보드 띄워서 개구림)
+        /*InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(user_id.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(user_pwd.getWindowToken(), 0);*/
     }
 
     private class SessionCallback implements ISessionCallback {
@@ -102,9 +113,7 @@ public class LoginActivity extends Activity {
         }
     }
 
-    /**
-     * 사용자의 상태를 알아 보기 위해 me API 호출을 한다.
-     */
+    //사용자의 상태를 알아 보기 위해 me API 호출을 한다.
     protected void KakaorequestMe() {
         UserManagement.requestMe(new MeResponseCallback() {
             @Override
@@ -125,15 +134,16 @@ public class LoginActivity extends Activity {
             }
 
             @Override
-            public void onSuccess(UserProfile userProfile) {
-                //profileUrl = userProfile.getProfileImagePath();
-                userId = String.valueOf(userProfile.getId());
-                userName = userProfile.getNickname();
+            public void onSuccess(UserProfile userProfile) {    // 로그인 성공시
+                profileUrl = userProfile.getProfileImagePath(); // 프사 경로
+                userId = String.valueOf(userProfile.getId());   // 카톡이 부여해주는 앱용 아이디
+                userName = userProfile.getNickname();           // 카톡 닉네임
 
                 Log.d(TAG, "id: " + userId);
-                Log.d(TAG, "name: " + userName);
+                Log.d(TAG, "nickname: " + userName);
+                Log.d(TAG, "photo: " + profileUrl);
 
-                //setLayoutText();
+                setLayout();    // 뷰에 정보 보이기 -테스트
             }
 
             @Override
@@ -143,16 +153,7 @@ public class LoginActivity extends Activity {
         });
     }
 
-    private void setLayoutText() {
-        tv_user_id.setText(userId);
-        tv_user_name.setText(userName);
-
-        /*Picasso.with(this)
-                .load(profileUrl)
-                .fit()
-                .into(iv_user_profile);*/
-    }
-
+    // 앱 해시키 가져오기 (여기서 가져온 키와 개발자가 설정한 키가 동일해야 함. 개중요함)
     private void getAppKeyHash() {
         try {
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
@@ -168,9 +169,23 @@ public class LoginActivity extends Activity {
         }
     }
 
-    // 로그인 버튼- 로그인 성공시 다음 액티비티로 넘어감
+    // 로그인 성공시 각종 정보 불러오기 -테스트
+    public void setLayout() {
+        test_id.setText(userId);
+        test_nick.setText(userName);
+
+        Picasso.with(this)
+                .load(profileUrl)
+                .fit()
+                .transform(new CircleTransform())
+                .into(user_profile);
+    }
+
+    // 로그인 버튼- 로그인 성공시 메인 액티비티로~
     public void loginBt(View view) {
         intent = new Intent(this, MainActivity.class);
+        intent.putExtra("name", userName);
+        intent.putExtra("profile", profileUrl);
         startActivity(intent);
         finish();
     }
@@ -178,39 +193,9 @@ public class LoginActivity extends Activity {
     // 회원가입창 팝업 버튼
     public void registBt(View view) {
         Toast.makeText(this, "회원가입 폼 띄우기", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(LoginActivity.this, RegistPopup.class);
+        Intent intent = new Intent(LoginActivity.this, SearchAddr.class);
 
         startActivity(intent);
-    }
-
-    // 텍스트 입력 가능한 얼럿창 띄우기
-    public void textPopup(View view) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-        alert.setTitle("Title");
-        alert.setMessage("Message");
-
-        // Set an EditText view to get user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
-
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString();
-                value.toString();
-                // Do something with value!
-            }
-        });
-
-
-        alert.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // Canceled.
-                    }
-                });
-
-        alert.show();
     }
 
     // 뒤로가기 두번 누르면 앱 종료

@@ -2,38 +2,85 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.nahcoos.petproject">
 
+    <!-- 내 프로젝트에 대한 보안 수준 설정. 내 프로젝트의 패키지가 org.androidtown.lbs.map 인 경우 -->
+    <permission
+        android:name="com.example.nahcoos.petproject.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <!-- 구글맵 API v2의 권한 설정 -->
+    <uses-permission android:name="org.androidtown.lbs.map.permission.MAPS_RECEIVE" />
+
+    <!-- 구글맵 API v2의 일반 권한 설정. -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
+    <!-- 일반 권한 설정 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!-- OpenGL 사용 설정 -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
     <application
-        android:name=".GlobalApplication"
+        android:name=".kakao.GlobalApplication"
         android:icon="@drawable/main_icon"
         android:label="다녀오개"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoTitleBar">
+        android:theme="@style/AppTheme">
 
-        <activity android:name=".IntroActivity">
+        <!-- 라이브러리 사용 설정 -->
+        <uses-library android:name="com.google.android.maps" />
+
+        <!-- 구글맵 API v2 키 설정 -->
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDByD2qcDZeXztKO52rs9FJlRbmOOV9N0E" />
+
+        <!-- GMS 라이브러리 버전 설정 -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <!-- 카카오 연동 키 설정 -->
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
+
+        <!-- 인트로 화면 -->
+        <activity android:name=".activities.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <!-- 로그인 화면 -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
-        <activity android:name=".MainActivity"></activity>
+        <!-- 메인 화면 -->
+        <activity android:name=".activities.MainActivity"></activity>
+
+        <!-- 주소로 좌표 검색창 -->
+        <activity android:name=".fragments.SearchAddr"></activity>
+
+        <!-- 회원 가입창 팝업 -->
         <activity
-            android:name=".RegistPopup"
+            android:name=".fragments.RegistPopup"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/AppTheme.NoTitleBar"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
 
-        <meta-data
-            android:name="com.kakao.sdk.AppKey"
-            android:value="@string/kakao_app_key" />
+        <!-- 맵 팝업 -->
+        <activity android:name=".fragments.MapPopup" />
 
+        <activity android:name=".board.ogae.write.Write" />
+        <activity android:name=".board.list.ReadDetail" />
     </application>
 
 </manifest>

@@ -3,81 +3,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#70e9a5"
+    android:background="@drawable/bg"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".activities.LoginActivity">
 
     <ImageView
-        android:id="@+id/iv_user_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/user_profile"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
         android:src="@drawable/pet" />
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
         android:text="다 녀 오 개"
-        android:textColor="#ffffffff"
+        android:textColor="@color/light"
         android:textSize="50sp" />
 
-    <EditText
-        android:id="@+id/tv_user_id"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="5dp"
-        android:background="#ffffffff"
-        android:focusableInTouchMode="true"
-        android:hint="아이디를 입력하세요"
-        android:maxLength="20"
-        android:padding="5dp"
-        android:textColorHint="#606060" />
-
-    <EditText
-        android:id="@+id/tv_user_name"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="5dp"
-        android:background="#ffffffff"
-        android:focusableInTouchMode="true"
-        android:hint="비밀번호를 입력하세요"
-        android:inputType="textPassword"
-        android:maxLength="20"
-        android:padding="5dp"
-        android:textColorHint="#606060" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:padding="10dp">
-
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="35dp"
-            android:layout_margin="10dp"
-            android:background="#62a9ff"
-            android:onClick="registBt"
-            android:text="회원가입" />
-
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="35dp"
-            android:background="#62a9ff"
-            android:onClick="loginBt"
-            android:text="로그인" />
-    </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/login_button"
+    <!--<LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/user_id"
+            android:layout_width="300dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:focusableInTouchMode="true"
+            android:hint="아이디를 입력하세요"
+            android:maxLength="20"
+            android:textColorHint="@color/light" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/user_pwd"
+            android:layout_width="300dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:focusableInTouchMode="true"
+            android:hint="비밀번호를 입력하세요"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:textColorHint="@color/light" />
+    </LinearLayout>-->
+
+    <ImageButton
+        android:id="@+id/bt_kakao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
         android:background="@android:color/transparent"
         android:src="@drawable/kakao_login" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:background="@color/com_kakao_brown"
+        android:onClick="loginBt"
+        android:text="게시판\n들어가기" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/test_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디 받아옴 테스트"
+            android:textColor="@color/com_kakao_brown" />
+
+        <TextView
+            android:id="@+id/test_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="닉네임 받아옴 테스트"
+            android:textColor="@color/com_kakao_brown" />
+    </LinearLayout>
 </LinearLayout>

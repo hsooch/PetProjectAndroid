@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
-        android:background="#FF70E9A5">
+        android:background="@color/material_teal">
 
     </android.webkit.WebView>
 </RelativeLayout>

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PetProject.iml" filepath="$PROJECT_DIR$/PetProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Pinterest/Pinterest.iml" filepath="$PROJECT_DIR$/Pinterest/Pinterest.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

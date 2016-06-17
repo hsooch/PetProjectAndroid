@@ -1,7 +1,8 @@
-package com.example.nahcoos.petproject;
+package com.example.nahcoos.petproject.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -9,29 +10,25 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-/**
- * Created by nahcoos on 2016. 6. 3..
- */
-public class RegistPopup extends Activity implements View.OnClickListener {
+import com.example.nahcoos.petproject.R;
+
+public class RegistPopup extends AppCompatActivity implements View.OnClickListener {
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        /*getWindow().setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,
-                WindowManager.LayoutParams.FLAG_BLUR_BEHIND);*/
-        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        layoutParams.dimAmount = 0.7f;
-        getWindow().setAttributes(layoutParams);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,
+                WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
-        setContentView(R.layout.regist_pop);
+        setContentView(R.layout.popup_regist);
         WebView webView = (WebView) findViewById(R.id.webPopup);
         webView.setWebViewClient(new myWebViewClient());
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setBuiltInZoomControls(true);
-        webView.loadUrl("http://www.naver.com");
+        webView.loadUrl("http://www.google.com");
     }
 
     class myWebViewClient extends WebViewClient {
