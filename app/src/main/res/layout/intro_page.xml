@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#ffffffff"
     android:orientation="vertical"
-    tools:context=".activities.IntroActivity">
+    tools:context=".intro.IntroActivity">
 
     <ImageView
         android:id="@+id/intro_bg"
@@ -20,7 +20,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <com.example.nahcoos.petproject.api.ext.ProgressBarCircular
+        <com.example.nahcoos.petproject.material.ProgressBarCircular
             android:id="@+id/progress"
             android:layout_width="36dp"
             android:layout_height="36dp"

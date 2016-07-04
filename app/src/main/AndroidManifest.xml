@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.nahcoos.petproject">
 
-    <!-- 내 프로젝트에 대한 보안 수준 설정. 내 프로젝트의 패키지가 org.androidtown.lbs.map 인 경우 -->
+    <!-- 내 프로젝트에 대한 보안 수준 설정. 내 프로젝트의 패키지가 com.example.nahcoos.petproject 인 경우 -->
     <permission
         android:name="com.example.nahcoos.petproject.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
@@ -27,7 +27,7 @@
         android:required="true" />
 
     <application
-        android:name=".kakao.GlobalApplication"
+        android:name=".login.kakao.GlobalApplication"
         android:icon="@drawable/main_icon"
         android:label="다녀오개"
         android:supportsRtl="true"
@@ -52,7 +52,7 @@
             android:value="@string/kakao_app_key" />
 
         <!-- 인트로 화면 -->
-        <activity android:name=".activities.IntroActivity">
+        <activity android:name=".intro.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -61,21 +61,23 @@
 
         <!-- 로그인 화면 -->
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".login.LoginActivity"
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
         <!-- 메인 화면 -->
-        <activity android:name=".activities.MainActivity"></activity>
+        <activity android:name=".mainview.MainActivity"></activity>
 
         <!-- 주소로 좌표 검색창 -->
-        <activity android:name=".fragments.SearchAddr"></activity>
+        <activity android:name=".login.SearchAddr"></activity>
 
         <!-- 맵 팝업 -->
-        <activity android:name=".fragments.MapPopup" />
+        <activity android:name=".mainview.MapPopup" />
 
+        <!-- 오개 게시판 -->
         <activity android:name=".board.ogae.write.Write" />
         <activity android:name=".board.ogae.list.ReadDetail" />
 
+        <!-- 올개 게시판 -->
         <activity android:name=".board.olgae.write.Write" />
         <activity android:name=".board.olgae.list.ReadDetail" />
     </application>

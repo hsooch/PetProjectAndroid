@@ -3,7 +3,7 @@ package com.example.nahcoos.petproject.board.ogae.write;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.nahcoos.petproject.fragments.OgaeFragment;
+import com.example.nahcoos.petproject.board.ogae.OgaeFragment;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -106,6 +106,10 @@ public class WriteAsync extends AsyncTask<String, Void, String> {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (con != null) {
+                con.disconnect();
+            }
         }
         return null;
     }
@@ -116,45 +120,3 @@ public class WriteAsync extends AsyncTask<String, Void, String> {
         OgaeFragment.myAdapter.notifyDataSetChanged();
     }
 }
-/*
-
-
-
-
-            //얻어온 입력스트림의 데이터를 output 스트림에 편승시키자!!
-            byte[] buff = new byte[1024 * 4];
-
-            int read = -1;
-            while (true) {
-                read = is.read(buff); //배열을 사용하여 한꺼번에 읽어들이는 경우 반환되는
-                //데이터는 읽어들인 데이터가 아니다!!
-                if (read == -1) break;
-                output.write(buff, 0, read);
-            }
-            is.close();
-            output.flush(); // Important before continuing with writer!
-            writer.append(CRLF).flush(); // CRLF is important! It indicates end of boundary.
-
-
-            // End of multipart/form-data.
-            writer.append("--" + boundary + "--").append(CRLF).flush();
-            writer.close();
-
-            int code = 0;
-            code = con.getResponseCode();
-            //System.out.println(code);
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-    }
-}*/

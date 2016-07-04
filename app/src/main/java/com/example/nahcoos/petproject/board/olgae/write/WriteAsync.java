@@ -3,7 +3,7 @@ package com.example.nahcoos.petproject.board.olgae.write;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.nahcoos.petproject.fragments.OgaeFragment;
+import com.example.nahcoos.petproject.board.olgae.OlgaeFragment;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -27,12 +27,14 @@ public class WriteAsync extends AsyncTask<String, Void, String> {
     String para[] = {
             "name", "whatKind", "registNumber", "address",
             "contactPoint", "isRegularCheck", "isOperation", "sex"};
+    Write write;
 
     //String param = "value";
     //File binaryFile = new File("D:/jsp_workspace/PhotoServer/WebContent/data/Jellyfish.jpg");
 
-    public WriteAsync(InputStream is) {
+    public WriteAsync(InputStream is, Write write) {
         this.is = is;
+        this.write = write;
     }
 
     protected String doInBackground(String... params) {
@@ -46,7 +48,7 @@ public class WriteAsync extends AsyncTask<String, Void, String> {
             con.setRequestMethod("POST");
             con.setRequestProperty("Connection", "keep-alive");
             con.setRequestProperty("Cache-Control", "max-age=0");
-            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            // con.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
             con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
 
 
@@ -59,18 +61,18 @@ public class WriteAsync extends AsyncTask<String, Void, String> {
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(output, charset), true);
             Log.d(TAG, "writer는" + writer);
 
-          /*  for (int i = 0; i < para.length; i++) {*/
-            writer.append("--" + boundary).append(CRLF);
-            writer.append("Content-Disposition: form-data; name=\"" + para[0] + "\"").append(CRLF);
-            writer.append("Content-Type: text/plain; charset=" + charset).append(CRLF);
-            writer.append(CRLF).append(params[1]).append(CRLF).flush();
-            /*}*/
+            for (int i = 0; i < para.length; i++) {
+                writer.append("--" + boundary).append(CRLF);
+                writer.append("Content-Disposition: form-data; name=\"" + para[i] + "\"").append(CRLF);
+                writer.append("Content-Type: text/plain; charset=" + charset).append(CRLF);
+                writer.append(CRLF).append(params[i + 1]).append(CRLF).flush();
+            }
             Log.d(TAG, "writer.append끝입니다.");
 
 
 // Send binary file.
             writer.append("--" + boundary).append(CRLF);
-            writer.append("Content-Disposition: form-data; name=\"filename\"; filename=\"" + params[9] + "\"").append(CRLF); //myFile로 수정됨
+            writer.append("Content-Disposition: form-data; name=\"myfile\"; filename=\"" + params[9] + "\"").append(CRLF); //myFile로 수정됨
             writer.append("Content-Type: " + HttpURLConnection.guessContentTypeFromName(params[9])).append(CRLF);
             writer.append("Content-Transfer-Encoding: binary").append(CRLF);
             writer.append(CRLF).flush();
@@ -106,55 +108,18 @@ public class WriteAsync extends AsyncTask<String, Void, String> {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (con != null) {
+                con.disconnect();
+            }
         }
+
         return null;
     }
 
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        OgaeFragment.myAdapter.loadData();
-        OgaeFragment.myAdapter.notifyDataSetChanged();
+        OlgaeFragment.myAdapter.loadData();
+        OlgaeFragment.myAdapter.notifyDataSetChanged();
     }
 }
-/*
-
-
-
-
-            //얻어온 입력스트림의 데이터를 output 스트림에 편승시키자!!
-            byte[] buff = new byte[1024 * 4];
-
-            int read = -1;
-            while (true) {
-                read = is.read(buff); //배열을 사용하여 한꺼번에 읽어들이는 경우 반환되는
-                //데이터는 읽어들인 데이터가 아니다!!
-                if (read == -1) break;
-                output.write(buff, 0, read);
-            }
-            is.close();
-            output.flush(); // Important before continuing with writer!
-            writer.append(CRLF).flush(); // CRLF is important! It indicates end of boundary.
-
-
-            // End of multipart/form-data.
-            writer.append("--" + boundary + "--").append(CRLF).flush();
-            writer.close();
-
-            int code = 0;
-            code = con.getResponseCode();
-            //System.out.println(code);
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-    }
-}*/

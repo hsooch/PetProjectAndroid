@@ -15,10 +15,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.nahcoos.petproject.R;
-import com.example.nahcoos.petproject.fragments.OgaeFragment;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class Write extends AppCompatActivity {
@@ -32,7 +32,6 @@ public class Write extends AppCompatActivity {
     ImageView edit_photo;
     InputStream is;
     File file;
-
 
     String TAG = getClass().getName();
 
@@ -55,12 +54,65 @@ public class Write extends AppCompatActivity {
         edit_girl = (RadioButton) findViewById(R.id.girl);
     }
 
+    public void insert(View view) {
+        // Intent의 암시적 선언 : 휴대폰의 사진첩에 접근하는 코드
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_REQUEST);  // Requestcode를 사용자가 정의, 보통 상수로 감.
+        Log.d(TAG, "사진클릭했습니다!");
+    }
+
+    // 사진 선택시, 그 결과를 가져올 메서드
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_REQUEST && resultCode == RESULT_OK) {
+            Log.d(TAG, "사진을 선택해서 가져옴");
+
+            // intent는 데이터 저장매체 객체 따라서, 안에 담긴 이미지를 추출해내자.
+            Uri uri = data.getData();
+            Log.d(TAG, "Uri uri는 data.getData()입니다." + uri);
+
+            edit_photo.setImageURI(uri);
+            edit_photo.setAdjustViewBounds(true);
+
+            Log.d(TAG, "img.setImageURI(uri)호출됨");
+
+            //파일명을 얻어오자.
+            Log.d(TAG, "uri.getPath()= " + uri.getPath());
+            Log.d(TAG, "uri.toString()= " + uri.getPath());
+
+            //이미지 실제 경로 얻기
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String filepath = cursor.getString(columnIndex);
+            cursor.close();
+
+            Log.d(TAG, "filepath는" + filepath);
+            //실제 파일이름 추출
+            file = new File(filepath);
+
+            try {
+                is = this.getContentResolver().openInputStream(uri);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } finally {
+            }
+
+        }
+    }
+
     public void regist(View view) {
-        WriteAsync writeAsync = new WriteAsync(is);
+        WriteAsync writeAsync = new WriteAsync(is, this);
         Log.d(TAG, "writeAsync는는" + writeAsync);
 
-        String path = "http://192.168.0.13:9090/device/pet/board";
+        //String path="http://192.168.43.216:9090/device/pet/board";
+        String path = "http://192.168.43.216:9090/device/pet/board";
+        //   String path="http://192.168.0.13:9090/device/test";
         /*String photo=edit_photo.getText().toString(); */
+
         String name = edit_name.getText().toString();
         String whatKind = edit_whatKind.getText().toString();
         String registNumber = edit_registNumber.getText().toString();
@@ -99,58 +151,6 @@ public class Write extends AppCompatActivity {
         writeAsync.execute(path, name, whatKind, registNumber, address, contactPoint, isRegularCheck, isOperation, sex, fileName);
         Log.d(TAG, "writeAsync.execute()실행되었습니다.!");
 
-        OgaeFragment.myAdapter.notifyDataSetChanged();
         finish();
     }
-
-    public void insert(View view) {
-        // Intent의 암시적 선언 : 휴대폰의 사진첩에 접근하는 코드
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        startActivityForResult(intent, PICK_REQUEST);  // Requestcode를 사용자가 정의, 보통 상수로 감.
-        Log.d(TAG, "사진클릭했습니다!");
-    }
-
-    // 사진 선택시, 그 결과를 가져올 메서드
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_REQUEST && resultCode == RESULT_OK) {
-            Log.d(TAG, "사진을 선택해서 가져옴");
-
-            // intent는 데이터 저장매체 객체 따라서, 안에 담긴 이미지를 추출해내자.
-            Uri uri = data.getData();
-
-            edit_photo.setImageURI(uri);
-            Log.d(TAG, "img.setImageURI(uri)호출됨");
-
-            //파일명을 얻어오자.
-            Log.d(TAG, "uri.getPath()= " + uri.getPath());
-            Log.d(TAG, "uri.toString()= " + uri.getPath());
-
-            //이미지 실제 경로 얻기
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String filepath = cursor.getString(columnIndex);
-            cursor.close();
-
-            Log.d(TAG, "filepath는" + filepath);
-            //실제 파일이름 추출
-            file = new File(filepath);
-
-            try {
-                is = this.getContentResolver().openInputStream(uri);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
 }
-
-
-
-
-

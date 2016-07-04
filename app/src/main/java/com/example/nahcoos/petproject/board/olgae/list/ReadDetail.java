@@ -1,6 +1,7 @@
 package com.example.nahcoos.petproject.board.olgae.list;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ public class ReadDetail extends AppCompatActivity {
     String isOperation_dto;
     String isRegularCheck_dto;
     String sex_dto;
+    Bitmap bitmap;
 
     ImageView photo;
     TextView name;
@@ -72,8 +74,10 @@ public class ReadDetail extends AppCompatActivity {
         isOperation_dto = intent.getStringExtra("isOperation");
         isRegularCheck_dto = intent.getStringExtra("isRegularCheck");
         sex_dto = intent.getStringExtra("sex");
+        bitmap = intent.getParcelableExtra("bitmap");
 
         // 서버의 값을 xml의 위젯에 담자!
+        photo.setImageBitmap(bitmap);
         name.setText(name_dto);
         whatKind.setText(whatKind_dto);
         registNumber.setText(registNumber_dto);

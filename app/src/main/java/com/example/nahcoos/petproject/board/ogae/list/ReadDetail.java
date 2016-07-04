@@ -16,7 +16,7 @@ import com.example.nahcoos.petproject.R;
 public class ReadDetail extends AppCompatActivity {
     String TAG = getClass().getName();
 
-    int petOwner_id;
+    int petSitter_id;
     String photo_dto;
     String name_dto;
     String whatKind_dto;
@@ -59,7 +59,7 @@ public class ReadDetail extends AppCompatActivity {
         sex = (RadioGroup) findViewById(R.id.sex);
 
         Intent intent = getIntent();
-        int petOwner_id = intent.getIntExtra("PetOwner_id", 0);
+        int petSitter_id = intent.getIntExtra("PetSitter_id", 0);
         Log.d(TAG, "name.setText(number);가동중");
 
         // 서버에서 불러온 값들이 저장된 dto의 멤머필드들

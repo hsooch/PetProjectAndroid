@@ -15,10 +15,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.nahcoos.petproject.R;
-import com.example.nahcoos.petproject.fragments.OgaeFragment;
+import com.example.nahcoos.petproject.board.ogae.OgaeFragment;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class Write extends AppCompatActivity {
@@ -47,7 +48,7 @@ public class Write extends AppCompatActivity {
         edit_address = (EditText) findViewById(R.id.address);
         edit_contactPoint = (EditText) findViewById(R.id.contactPoint);
 
-        //반환형 확인 String화가 가능한지..
+        // 반환형 확인 String화가 가능한지..
         edit_isOperation = (CheckBox) findViewById(R.id.isOperation);
         edit_isRegularCheck = (CheckBox) findViewById(R.id.isRegularCheck);
         edit_sex = (RadioGroup) findViewById(R.id.sex);
@@ -59,7 +60,7 @@ public class Write extends AppCompatActivity {
         WriteAsync writeAsync = new WriteAsync(is);
         Log.d(TAG, "writeAsync는는" + writeAsync);
 
-        String path = "http://192.168.0.13:9090/device/pet/board";
+        String path = "http://192.168.43.216:9090/device/pet/board";
         /*String photo=edit_photo.getText().toString(); */
         String name = edit_name.getText().toString();
         String whatKind = edit_whatKind.getText().toString();
@@ -71,7 +72,7 @@ public class Write extends AppCompatActivity {
         boolean r_isOperation = edit_isOperation.isChecked();
         String isRegularCheck = null;
         String isOperation = null;
-        String fileName = file.getName();
+        String fileName = file.getName();   // 파일네임 없으면 에러뜸..
 
         if (r_isRegularCheck) {
             isRegularCheck = "true";
@@ -83,10 +84,10 @@ public class Write extends AppCompatActivity {
         } else {
             isOperation = "false";
         }
-        //Radio그룹에서 선택한 값이 암컷인지 수컷이지 확인.
+        // Radio그룹에서 선택한 값이 암컷인지 수컷이지 확인.
         int result = edit_sex.getCheckedRadioButtonId();
         String sex = null;
-        Log.d(TAG, "result는는" + result);
+        Log.d(TAG, "result는" + result);
         if (result == 2131493008) {
             sex = "암컷";
         } else if (result == 2131493009) {
@@ -124,11 +125,11 @@ public class Write extends AppCompatActivity {
             edit_photo.setImageURI(uri);
             Log.d(TAG, "img.setImageURI(uri)호출됨");
 
-            //파일명을 얻어오자.
+            // 파일명을 얻어오자.
             Log.d(TAG, "uri.getPath()= " + uri.getPath());
             Log.d(TAG, "uri.toString()= " + uri.getPath());
 
-            //이미지 실제 경로 얻기
+            // 이미지 실제 경로 얻기
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = getContentResolver().query(uri, null, null, null, null);
             cursor.moveToFirst();
@@ -137,13 +138,15 @@ public class Write extends AppCompatActivity {
             cursor.close();
 
             Log.d(TAG, "filepath는" + filepath);
-            //실제 파일이름 추출
+
+            // 실제 파일이름 추출
             file = new File(filepath);
 
             try {
                 is = this.getContentResolver().openInputStream(uri);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+            } finally {
             }
 
         }

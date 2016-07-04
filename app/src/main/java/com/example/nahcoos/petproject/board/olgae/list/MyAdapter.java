@@ -1,13 +1,14 @@
 package com.example.nahcoos.petproject.board.olgae.list;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.AppCompatTextView;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.nahcoos.petproject.R;
 
@@ -23,20 +24,26 @@ public class MyAdapter extends BaseAdapter {
     int posting[] = new int[6];
     MyAsync myAsync;
     public ArrayList<PetOwner> list = new ArrayList<PetOwner>();
+    MyAdapter adapter;
+    MyListView myListView;
+    ArrayList<Bitmap> bitmapArrayList;
 
-    public MyAdapter(Context context) {
+    String path = null;
+
+    public MyAdapter(Context context, MyListView myListView, ArrayList<Bitmap> bitmapArrayList) {
 
         this.context = context;
         Log.d(TAG, "MyAdapter()실행중!!");
+        this.myListView = myListView;
+        this.bitmapArrayList = bitmapArrayList;
 
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        posting[0] = R.drawable.animal1;
-        posting[1] = R.drawable.animal2;
-        posting[2] = R.drawable.animal3;
-        posting[3] = R.drawable.animal4;
-        posting[4] = R.drawable.animal5;
-        posting[5] = R.drawable.animal6;
+/*     posting[0]=R.drawable.animal1;
+        posting[1]=R.drawable.animal2;
+        posting[2]=R.drawable.animal3;
+        posting[3]=R.drawable.animal4;
+        posting[4]=R.drawable.animal5;*/
 
         loadData();
 
@@ -73,43 +80,37 @@ public class MyAdapter extends BaseAdapter {
             view = convertView;
         }
 
-        AppCompatImageView imageView = (AppCompatImageView) view.findViewById(R.id.photo);
-        AppCompatTextView name = (AppCompatTextView) view.findViewById(R.id.name);
-        AppCompatTextView whatKind = (AppCompatTextView) view.findViewById(R.id.whatKind);
-        AppCompatTextView registNumber = (AppCompatTextView) view.findViewById(R.id.registNumber);
-        AppCompatTextView address = (AppCompatTextView) view.findViewById(R.id.address);
-        AppCompatTextView contactPoint = (AppCompatTextView) view.findViewById(R.id.contactPoint);
+        ImageView imageView = (ImageView) view.findViewById(R.id.photo);
+        TextView name = (TextView) view.findViewById(R.id.name);
+        TextView whatKind = (TextView) view.findViewById(R.id.whatKind);
+        TextView registNumber = (TextView) view.findViewById(R.id.registNumber);
+        TextView address = (TextView) view.findViewById(R.id.address);
+        TextView contactPoint = (TextView) view.findViewById(R.id.contactPoint);
         // CheckBox isOperation = (CheckBox) view.findViewById(R.id.isOperation);
         //CheckBox isRegularCheck = (CheckBox) view.findViewById(R.id.isRegularCheck);
         //RadioButton boy = (RadioButton) view.findViewById(R.id.boy);
         // RadioButton girl = (RadioButton) view.findViewById(R.id.girl);
 
-        int index = position % 6;
-        imageView.setImageResource(posting[index]);
+        PetOwner petOwner = list.get(position);
+        Log.d(TAG, "list.get(position) 호출: " + list.get(position));
+
+        int seq = petOwner.getPetOwner_id();
+        String filename = petOwner.getPhoto(); // getPhoto로 dto의 파일 이름을 호출
+        String ext = filename.substring(filename.lastIndexOf(".") + 1, filename.length());
+
+        //참고] Bitmap은 이미지가 아니라 이미지가 될 수 있는 최상위 객체다
+        //이미지 로더를 호출하자!! (= ImageAsync)
+        ImageAsync imageAsync = new ImageAsync(imageView, adapter, myListView, bitmapArrayList);
+        imageAsync.execute("http://192.168.43.216:9090/photo/" + seq + "." + ext);
+
         // *중요* ViewBounds를 true로 설정한 후, view들이 (자신의 높이에 맞게) 자신의 밑에 있는 view들과 빈 여백없이 나열되었다.
         imageView.setAdjustViewBounds(true);
 
-        name.setText(list.get(position).getName());
-        whatKind.setText(list.get(position).getWhatKind());
-        registNumber.setText(list.get(position).getRegistNumber());
-        address.setText(list.get(position).getAddress());
-        contactPoint.setText(list.get(position).getContactPoint());
-
-      /*  if(list.get(position).isOperation!=null) {
-            isOperation.setChecked(true);
-            isOperation.setActivated(false);
-        }
-        if(list.get(position).isRegularCheck!=null){
-            isRegularCheck.setChecked(true);
-            isRegularCheck.setActivated(false);
-        }
-        if (list.get(position).getSex().equals("암컷")) {
-            girl.setChecked(true);
-            girl.setActivated(false);
-        } else if (list.get(position).getSex().equals("수컷")) {
-            boy.setChecked(true);
-            boy.setActivated(false);
-        }*/
+        name.setText(petOwner.getName());
+        whatKind.setText(petOwner.getWhatKind());
+        registNumber.setText(petOwner.getRegistNumber());
+        address.setText(petOwner.getAddress());
+        contactPoint.setText(petOwner.getContactPoint());
 
         return view;
     }
