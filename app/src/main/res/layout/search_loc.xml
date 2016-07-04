@@ -1,0 +1,74 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/com_kakao_brown"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/show_btn"
+            android:hint="주소를 입력하세요."
+            android:text=""
+            android:textColorHint="@color/light"
+            android:textSize="16dp" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/show_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="주소 검색"
+            android:textSize="16dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit02"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="위도 좌표"
+            android:textColorHint="@color/light"
+            android:textSize="16dp" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edit03"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="경도 좌표 "
+            android:textColorHint="@color/light"
+            android:textSize="16dp" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/show_btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="좌표 검색"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/contentsText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="" />
+    </ScrollView>
+
+</LinearLayout>
