@@ -1,12 +1,14 @@
-package com.example.nahcoos.petproject.login.kakao;
+package com.example.nahcoos.petproject;
 
 import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
 
+import com.example.nahcoos.petproject.login.kakao.KakaoSDKAdapter;
 import com.kakao.auth.KakaoSDK;
 
 public class GlobalApplication extends Application {
+
     private static GlobalApplication mInstance;
     private static volatile Activity currentActivity = null;
 

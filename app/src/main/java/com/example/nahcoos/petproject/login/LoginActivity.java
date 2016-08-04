@@ -1,16 +1,20 @@
 package com.example.nahcoos.petproject.login;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,6 +48,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private ImageButton bt_kakao;   // 카톡 로그인 버튼
 
+    private Button loginBt;
+
     private TextView test_id;
     private TextView test_nick;
 
@@ -69,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //user_id = (AppCompatEditText) findViewById(R.id.user_id);
         //user_pwd = (AppCompatEditText) findViewById(R.id.user_pwd);
+        loginBt = (Button) findViewById(R.id.loginBt);
 
         bt_kakao = (ImageButton) findViewById(R.id.bt_kakao);
         // 카카오로그인 버튼에 리스너 달기
@@ -190,6 +197,35 @@ public class LoginActivity extends AppCompatActivity {
         intent.putExtra("userid", userId);
         startActivity(intent);
         finish();
+    }
+
+    // 텍스트 얼럿창 띄우기
+    public void textPopup(View view) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Title");
+        alert.setMessage("Message");
+
+        final AppCompatEditText input = new AppCompatEditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                value.toString();
+                // Do something with value!
+
+            }
+        });
+
+        alert.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Canceled.
+                    }
+                });
+
+        alert.show();
     }
 
     // 회원가입창 팝업 버튼

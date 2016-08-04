@@ -31,14 +31,15 @@
             android:background="@android:color/transparent"
             android:src="@drawable/kakao_login" />
 
-        <!-- <Button
+        <Button
+            android:id="@+id/loginBt"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_gravity="center_horizontal"
              android:layout_marginTop="30dp"
              android:background="@color/com_kakao_brown"
-             android:onClick="loginBt"
-             android:text="게시판\n들어가기" />-->
+             android:onClick="textPopup"
+             android:text="게시판\n들어가기" />
 
         <ImageView
             android:id="@+id/user_profile"

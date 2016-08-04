@@ -27,14 +27,14 @@
         android:required="true" />
 
     <application
-        android:name=".login.kakao.GlobalApplication"
+        android:name=".GlobalApplication"
         android:icon="@drawable/main_icon"
         android:label="다녀오개"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
         <!-- 라이브러리 사용 설정 -->
-        <uses-library android:name="com.google.android.maps" />
+        <!--<uses-library android:name="com.google.android.maps" />-->
 
         <!-- 구글맵 API v2 키 설정 -->
         <meta-data

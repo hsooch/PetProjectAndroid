@@ -1,6 +1,5 @@
 package com.example.nahcoos.petproject.mainview;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -11,6 +10,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -27,9 +27,9 @@ import android.widget.Toast;
 import com.example.nahcoos.petproject.R;
 import com.example.nahcoos.petproject.helper.function.BackPressCloseHandler;
 import com.example.nahcoos.petproject.helper.img.CircleTransform;
+import com.example.nahcoos.petproject.login.LoginActivity;
 import com.example.nahcoos.petproject.material.SlidingTabLayout;
 import com.example.nahcoos.petproject.material.ViewPagerAdapter;
-import com.example.nahcoos.petproject.login.LoginActivity;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
@@ -284,34 +284,6 @@ public class MainActivity extends AppCompatActivity {
         } else if (!drawerLayout.isDrawerOpen(drawerLinear)) {
             backPressCloseHandler.onBackPressed();
         }
-    }
-
-    // 텍스트 얼럿창 띄우기
-    public void textPopup(View view) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-        alert.setTitle("Title");
-        alert.setMessage("Message");
-
-        final EditText input = new EditText(this);
-        alert.setView(input);
-
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString();
-                value.toString();
-                // Do something with value!
-            }
-        });
-
-        alert.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // Canceled.
-                    }
-                });
-
-        alert.show();
     }
 
     // 로그아웃 얼럿

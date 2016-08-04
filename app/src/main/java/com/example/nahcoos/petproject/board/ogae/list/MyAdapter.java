@@ -14,7 +14,6 @@ import com.example.nahcoos.petproject.R;
 
 import java.util.ArrayList;
 
-
 public class MyAdapter extends BaseAdapter {
 
     Context context;

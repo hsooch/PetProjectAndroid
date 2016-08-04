@@ -3,6 +3,7 @@ package com.example.nahcoos.petproject.login.kakao;
 import android.app.Activity;
 import android.content.Context;
 
+import com.example.nahcoos.petproject.GlobalApplication;
 import com.kakao.auth.ApprovalType;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.IApplicationConfig;
